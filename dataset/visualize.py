@@ -11,7 +11,7 @@ from pytorch3d.vis import plotly_vis
 
 from typing import Optional, Tuple
 from visdom import Visdom
-from .co3d_dataset import Co3dDataset, FrameData
+from dataset.co3d_dataset import Co3dDataset, FrameData
 
 from pytorch3d.structures import Pointclouds
 from tools.point_cloud_utils import get_rgbd_point_cloud
@@ -93,8 +93,7 @@ def get_co3d_sequence_pointcloud(
             frame_data.camera,
             frame_data.image_rgb,
             frame_data.depth_map,
-            (frame_data.fg_probability > 0.5).float(),
-            mask_points=mask_points,
+            (frame_data.fg_probability > 0.5).float() if mask_points else None,
         )
 
     return point_cloud, frame_data
